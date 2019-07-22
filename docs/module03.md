@@ -9,8 +9,24 @@ Engineered features should start by using your own (or others') expertise about 
 * Isolate information that may be important
 * Make use of boolean masks to develop new features
 
-Let's build a feature for 2 beds & 2 baths, which is a popular home option for investors. 
+Import libraries and load dataset
+```code
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# view additional data frame columns
+pd.set_option('display.max_columns', 100)
+
+# display plots in the notebook
+%matplotlib inline
+
+# load the cleaned dataset
+df = pd.read_csv('../dataset/cleaned_df.csv')
+```
+
+Let's build a feature for 2 beds & 2 baths, which is a popular home option for investors. 
 ```code
 # create a boolean feature
 df['two_and_two'] = ((df.beds == 2) & (df.baths == 2)).astype(int)
@@ -76,6 +92,8 @@ df.school_score.median()
 
 Reduce the number of sparse classes for categorical features.
 
+**Objectives:**
+
 * Check for and consolidate similar classes
 * Group sparse classes into a single "Other" class
 
@@ -110,7 +128,7 @@ df.exterior_walls.replace(to_replace=['Wood Shingle', 'Wood Siding'], value='Woo
 Next, we'll consolidate sparse classes into a single 'Other' class. 
 
 ```code
-df.exteriror_walls.value_counts()
+df.exterior_walls.value_counts()
 ```
 
 ```code
@@ -140,10 +158,10 @@ df.roof.value_counts()
 
 ```code
 # consolidate into the 'Composition Shingle' class
-df.roof.replace(['Composition, 'Wood Shake/ Shingles'], 'Composition Shingle', inplace=True)
+df.roof.replace(['Composition', 'Wood Shake/ Shingles'], 'Composition Shingle', inplace=True)
 
 # list of classes to be replaced by 'Other'
-other_classes = ['Other', 'Gravel/Rock', 'Roll Composition', 'Slate', 'Asbestos', 'Metal', 'Built-up']
+other_roofs = ['Other', 'Gravel/Rock', 'Roll Composition', 'Slate', 'Asbestos', 'Metal', 'Built-up']
 
 # consolidate into the 'Other' class
 df.roof.replace(other_roofs, 'Other', inplace=True)
@@ -155,7 +173,7 @@ df.roof.value_counts()
 ```
 
 ```code
-sns.countplot(y='exterior_walls', data=df)
+sns.countplot(y='roof', data=df)
 ```
 
 ## Dummy Variables
@@ -173,7 +191,7 @@ For any one observation, we will instead need to specify whether the observation
 
 ```code
 # convert categorical variables into indicator variables
-df = pd.get_dummies(df. columns=['exterior_walls', 'roof', 'property_type']
+df = pd.get_dummies(df, columns=['exterior_walls', 'roof', 'property_type'])
 ```
 
 Our roof series has now been replaced with five new features. 
@@ -186,6 +204,8 @@ df.filter(like='roof').head(5)
 ## Remove Unused
 
 Remove unused or redundant features from the dataset.
+
+**Objectives:**
 
 * Remove features that don't make sense to pass into the machine learning algorithms.
 * Remove features that are redundant 
