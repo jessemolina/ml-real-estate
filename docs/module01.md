@@ -6,13 +6,13 @@ Let's begin our project by first getting to know the dataset. Our initial analys
 
 ## Basic Information 
 
-Here is an overview of our objectives for this phase:
+**Objectives:**
 
-* Import data as a pandas dataframe
-* Review data shape (observations, features)
-* Review the data types to determine categorical vs numerical features
-* Reference the data dictionary and verify features weren't imported as incorrect data type
-* Perform base analysis of dataset and get a qualitative feel 
+* Import data as a pandas data frame.
+* Review data shape (observations, features). 
+* Review the data types to determine categorical versus numerical features. 
+* Reference the data dictionary and verify features weren't imported as incorrect data type. 
+* Perform base analysis of dataset and get a qualitative feel. 
 
 Let's start by importing our libraries and make our initial configurations. 
 
@@ -24,6 +24,7 @@ import seaborn as sns
         
 # change pandas option to view additional data frame columns
 pd.set_option('display.max_columns', 100)
+pd.set_option('display.width', None)
 
 # display plots in the notebook
 %matplotlib inline
@@ -64,12 +65,13 @@ df.tail()
 
 # Numeric Distribution
  
-After completing our basic observations, let's review our numerical data for the following:
+After completing our basic observations, let's review our numerical data.
 
-* Unexpected distributions (e.g. max value higher than normal)
-* Numbers outside of their boundaries (e.g. +100%)
-* Sparse data
-* Measurement errors
+**Objectives:**
+
+* Check for unexpected distributions (e.g. max value higher than normal)
+* Insepct for numbers outside of their boundaries (e.g. +100%)
+* Look out for any sparse data and measurement errors
 
       
 ```code
@@ -95,7 +97,9 @@ At a quick glance, our numerical data appears to make sense. At this point, we c
 
 ## Categorical Distribution
     
-Let's review the categorical data for the following: 
+Next, let's review the categorical data.
+
+**Objectives:**
 
 * Observe class frequency
 * Account for sparse data that could be combined or reassigned
@@ -122,6 +126,8 @@ At this point, we should have started to think of features we can consider conso
 ## Segmentations
 
 Review segmentation to observe the relationship between categorical and numeric features. 
+
+**Objective:**
 
 * Build a boxplot to segment the target variable (tx_price) by key categorical features. 
 
@@ -152,7 +158,9 @@ When comparing our features, we should consider the following questions:
 
 ## Correlation
 
-Correlate relationships between numeric features:
+Correlate relationships between numeric features against the target variable. 
+
+**Objectives:**
 
 * Search for strong correlations for target variable
 
@@ -161,7 +169,7 @@ To start, we can assess our correlations against our target value.
 ```code
 # Calculate correlation between numeric features
 correlations = df.corr()
-correlations.tx_price.sort_values(ascending=True)
+correlations.tx_price.sort_values(ascending=False)
 ```
 
 Knowing that we have different property types, we can build correlations for each types for further analysis. 
@@ -176,7 +184,7 @@ single_correlation = df[df.property_type == 'Single-Family'].corr()
 single_correlation.tx_price.sort_values(ascending=False)
 ```
 
-We can also create a Seaborn heatmap to better visualize the correlations. 
+We can create a Seaborn heatmap to better visualize the correlations. 
 
 ```code
 # create pyplot figure
@@ -188,7 +196,7 @@ mask = np.zeros_like(correlations, dtype=np.bool) # 2d ndarry bool values, same 
 mask[np.triu_indices_from(mask)] = True # set upper triangle indices to True
 
 # plot heatmap as triangle
-sns.heatmap(correlations * 100, annot=True, fmt='.0f', mask=mask)
+sns.heatmap(correlations * 100, annot=True, fmt='.0f', mask=mask, cmap='RdBu')
 ```
 ## Next Module
 

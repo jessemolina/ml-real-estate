@@ -2,7 +2,7 @@
 
 This is a data science project that displays the use of regression in machine learning. The project is based on a fictional real estate company who is seeking a data-driven approach to valuing properties. 
 
-The project is written in five different modules, each being a major step in the development of our machine learning solution. 
+The project is written in four different modules, each being a major step in the development of our machine learning solution. 
 
 ## Project Context 
 
@@ -24,6 +24,8 @@ Win condition: **Avg prediction error < $70k**
 
 [01. Exploratory Analysis](notebooks/module01.ipynb)
 
-[02. Data Cleaning](doc/module02.md)
+[02. Data Cleaning](notebooks/module02.ipynb)
 
-[03. Feature Engineering](doc/module03.md)
+[03. Feature Engineering](notebooks/module03.ipynb)
+
+[04. Model Training](notebooks/module04.ipynb)

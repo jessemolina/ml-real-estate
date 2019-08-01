@@ -1,5 +1,5 @@
 ---
-title: Module 05 -  Model Training
+title: Module 04 -  Model Training
 ---
 
 Let's start by importing the libraries. 
@@ -12,6 +12,7 @@ import seaborn as sns
 import sklearn
 
 pd.set_option('display.max_columns', 100)
+pd.set_option('display.width', None)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 %matplotlib inline
@@ -107,24 +108,24 @@ Unlike standard parameters that are learned attributes from the training data, h
 ```code
 # lasso hyperparameters
 lasso_hyperparameters = {
-    'lasso__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5 10]
+    'lasso__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10]
 }   
 
 # ridge hyperparameters
 ridge_hyperparameters = {
-    'ridge__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5 10]
+    'ridge__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10]
 }
 
 # elastic net hyperparameters
 enet_hyperparameters = {
-    'elasticnet__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5 10],
-    'elasticnet__l1_ration' : [0.1, 0.3, 0.5, 0.7, 0.9]
+    'elasticnet__alpha' : [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10],
+    'elasticnet__l1_ratio' : [0.1, 0.3, 0.5, 0.7, 0.9]
 }
 
 # random forest hyperparameters
 rf_hyperparameters = {
     'randomforestregressor__n_estimators' : [100, 200],
-    'randomforestregressor__max_featres' : ['auto', 'sqrt', 0.33]
+    'randomforestregressor__max_features' : ['auto', 'sqrt', 0.33]
 }
 
 # gradient boost hyperparameters
@@ -169,7 +170,7 @@ for name, pipeline in pipelines.items():
     fitted_models[name] = model
 
     # print message after model has been fitted
-    print(name, 'has been fitted.)
+    print(name, 'has been fitted.')
 ```
 
 Finally, we'll want to verify that our models have been fitted correctly
@@ -210,10 +211,10 @@ from sklearn.metrics import mean_absolute_error
 Let's tests our models against our test data. 
 
 ```code
-for name, model in fitted_modes.items():
+for name, model in fitted_models.items():
     pred = model.predict(X_test)
     print(name)
-    print('________')
+    print('--------')
     print('R^2:', r2_score(y_test, pred))
     print('MAE:', mean_absolute_error(y_test, pred))
 ```
@@ -223,7 +224,7 @@ Let's assess our models by answering the following questions:
 * Which model had the highest R^2 on the test set?
     __rf, Random Forest Regressor__
 
-* Which model has the lowed mean absolute error?
+* Which model has the lowest mean absolute error?
     __rf, Random Forest Regressor__
 
 
